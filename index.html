@@ -240,10 +240,15 @@
 <body>
 
   <div id="container">
-    <!-- Perguntas -->
+    <!-- 8 Perguntas -->
     <p>O número que você pensou está nesta tabela?</p>
-    <p>Escolha um número de 1 a 130.</p>
-    <p>Conseguiu adivinhar o número correto?</p>
+    <p>Você consegue identificar o número correto?</p>
+    <p>Qual número chamou mais sua atenção?</p>
+    <p>Você acha que ele é par ou ímpar?</p>
+    <p>O número escolhido está entre 1 e 65?</p>
+    <p>Está entre 66 e 130?</p>
+    <p>Você consegue adivinhar o próximo número da sequência?</p>
+    <p>Conseguiu encontrar o número que pensou?</p>
   </div>
 
   <script>
@@ -252,13 +257,14 @@
 
     // ===== Função de narração =====
     function narrar(texto) {
+      if (!texto) return;
       window.speechSynthesis.cancel();
       const fala = new SpeechSynthesisUtterance(texto);
       fala.lang = 'pt-BR';
       window.speechSynthesis.speak(fala);
     }
 
-    // ===== Botões =====
+    // ===== Botões principais =====
     function criarBotao(texto, cor, posRight) {
       const btn = document.createElement('button');
       btn.textContent = texto;
@@ -276,10 +282,12 @@
     const btnLerPagina = criarBotao('🔊 Ler Página', '#4CAF50', '20px');
     const btnParar = criarBotao('⏹️ Parar', '#f44336', '150px');
 
+    // Ler toda a página
     btnLerPagina.addEventListener('click', () => {
       narrar(document.body.innerText);
     });
 
+    // Parar leitura
     btnParar.addEventListener('click', () => {
       window.speechSynthesis.cancel();
     });
@@ -287,18 +295,18 @@
     // ===== Adicionar ícones 🔊 nas perguntas =====
     const perguntas = container.querySelectorAll('p');
     perguntas.forEach(p => {
-      // Criar ícone
       const icone = document.createElement('span');
       icone.innerText = '🔊';
       icone.className = 'audio-icon';
       icone.title = 'Clique para ouvir esta pergunta';
       
-      // Clique no ícone
       icone.addEventListener('click', () => {
-        narrar(p.textContent.trim());
+        // Remove o ícone do texto ao ler
+        const texto = p.textContent.replace('🔊','').trim();
+        narrar(texto);
       });
 
-      // Inserir ícone no início do <p>
+      // Coloca o ícone na frente do texto da pergunta
       p.insertBefore(icone, p.firstChild);
     });
 
