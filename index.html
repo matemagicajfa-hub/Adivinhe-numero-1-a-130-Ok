@@ -714,53 +714,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Jogo de Adivinhação com Áudio</title>
-<style>
-  body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: white; }
-  .tabela-container { margin-bottom: 30px; border: 2px solid #ccc; padding: 10px; display: inline-block; vertical-align: top; }
-  .tabela-container p { font-size: 16px; display: flex; align-items: center; margin: 5px 0; }
-  .audio-icon { cursor: pointer; margin-left: 8px; color: #00ffff; user-select: none; font-size: 18px; }
-  table { border-collapse: collapse; margin-top: 5px; }
-  td { border: 1px solid #ccc; padding: 5px 10px; text-align: center; }
-  button { padding: 10px 15px; font-size: 14px; border: none; border-radius: 8px; cursor: pointer; color: white; margin-right: 10px; margin-top: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leitura e Controle de Voz</title>
 </head>
 <body>
+  <h1>Leitura de Página com Botões de Controle</h1>
+  <p>Este é um exemplo de leitura de conteúdo com controle de voz. Clique no botão abaixo para ouvir o texto da página.</p>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let fala = null;
 
-<!-- Botões Globais -->
-<button id="lerPagina" style="background-color: #4CAF50;">🔊 Ler Todas as Perguntas</button>
-<button id="parar" style="background-color: #f44336;">⏹️ Parar</button>
+      function narrar(texto) {
+        if (!texto) return;
+        window.speechSynthesis.cancel();
+        fala = new SpeechSynthesisUtterance(texto);
+        fala.lang = 'pt-BR';
+        window.speechSynthesis.speak(fala);
+      }
 
-<script>
-function narrar(texto) {
-  if (!texto) return;
-  window.speechSynthesis.cancel();
-  const fala = new SpeechSynthesisUtterance(texto);
-  fala.lang = 'pt-BR';
-  window.speechSynthesis.speak(fala);
-}
+      function criarBotao(texto, cor, posRight) {
+        const btn = document.createElement('button');
+        btn.textContent = texto;
+        Object.assign(btn.style, {
+          position: 'fixed',
+          bottom: '20px',
+          right: posRight,
+          backgroundColor: cor,
+          color: 'white',
+          padding: '10px 20px',
+          fontSize: '16px',
+          borderRadius: '5px',
+          border: 'none',
+          cursor: 'pointer',
+        });
+        document.body.appendChild(btn);
+        return btn;
+      }
 
-// Botão ler todas as perguntas
-document.getElementById('lerPagina').addEventListener('click', () => {
-  narrar(document.getElementById('container').innerText);
-});
+      const btnLerPagina = criarBotao('🔊 Ler Página', '#4CAF50', '20px');
+      const btnParar = criarBotao('⏹️ Parar', '#f44336', '150px');
+      const btnPausar = criarBotao('⏸️ Pausar', '#ff9800', '280px');
+      const btnRetomar = criarBotao('▶️ Retomar', '#2196F3', '410px');
 
-// Botão parar leitura
-document.getElementById('parar').addEventListener('click', () => {
-  window.speechSynthesis.cancel();
-});
+      btnLerPagina.addEventListener('click', () => {
+        narrar(document.body.innerText); // Lê toda a página
+        alert('A leitura da página começou!');
+      });
 
-// Ícone de áudio individual
-const icones = document.querySelectorAll('.audio-icon');
-icones.forEach(icone => {
-  icone.addEventListener('click', () => {
-    const texto = icone.parentElement.textContent.replace('🔊','').trim();
-    narrar(texto);
-  });
-});
-</script>
+      btnParar.addEventListener('click', () => {
+        window.speechSynthesis.cancel(); // Interrompe a leitura
+        alert('A leitura foi interrompida!');
+      });
 
+      btnPausar.addEventListener('click', () => {
+        if (fala && window.speechSynthesis.speaking) {
+          window.speechSynthesis.pause(); // Pausa a leitura
+          alert('A leitura foi pausada.');
+        }
+      });
+
+      btnRetomar.addEventListener('click', () => {
+        if (fala && window.speechSynthesis.paused) {
+          window.speechSynthesis.resume(); // Retoma a leitura
+          alert('A leitura foi retomada.');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
