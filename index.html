@@ -210,83 +210,128 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Perguntas por Tabela com Áudio</title>
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .tabela-container {
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      margin: 5px 0;
-    }
-    .audio-icon {
-      cursor: pointer;
-      margin-left: 8px;
-      color: #2196F3;
-      user-select: none;
-    }
-    button {
-      padding: 10px 15px;
-      font-size: 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      color: white;
-      margin-right: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Jogo de Adivinhação com Áudio</title>
+<style>
+  body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: white; }
+  .tabela-container { margin-bottom: 30px; border: 2px solid #ccc; padding: 10px; display: inline-block; vertical-align: top; }
+  .tabela-container p { font-size: 16px; display: flex; align-items: center; margin: 5px 0; }
+  .audio-icon { cursor: pointer; margin-left: 8px; color: #00ffff; user-select: none; font-size: 18px; }
+  table { border-collapse: collapse; margin-top: 5px; }
+  td { border: 1px solid #ccc; padding: 5px 10px; text-align: center; }
+  button { padding: 10px 15px; font-size: 14px; border: none; border-radius: 8px; cursor: pointer; color: white; margin-right: 10px; margin-top: 10px; }
+</style>
 </head>
 <body>
 
-  <!-- 8 tabelas simuladas -->
-  <div id="container">
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
-    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+<div id="container">
+
+  <!-- Tabela 1 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+      <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+    </table>
   </div>
 
-  <!-- Botões Ler Página e Parar -->
-  <button id="lerPagina" style="background-color: #4CAF50;">🔊 Ler Página</button>
-  <button id="parar" style="background-color: #f44336;">⏹️ Parar</button>
+  <!-- Tabela 2 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr>
+      <tr><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+    </table>
+  </div>
 
-  <script>
-    function narrar(texto) {
-      if (!texto) return;
-      window.speechSynthesis.cancel();
-      const fala = new SpeechSynthesisUtterance(texto);
-      fala.lang = 'pt-BR';
-      window.speechSynthesis.speak(fala);
-    }
+  <!-- Tabela 3 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td></tr>
+      <tr><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td></tr>
+    </table>
+  </div>
 
-    // Ler todas as perguntas
-    document.getElementById('lerPagina').addEventListener('click', () => {
-      narrar(document.getElementById('container').innerText);
-    });
+  <!-- Tabela 4 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>31</td><td>32</td><td>33</td><td>34</td><td>35</td></tr>
+      <tr><td>36</td><td>37</td><td>38</td><td>39</td><td>40</td></tr>
+    </table>
+  </div>
 
-    // Parar leitura
-    document.getElementById('parar').addEventListener('click', () => {
-      window.speechSynthesis.cancel();
-    });
+  <!-- Tabela 5 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>41</td><td>42</td><td>43</td><td>44</td><td>45</td></tr>
+      <tr><td>46</td><td>47</td><td>48</td><td>49</td><td>50</td></tr>
+    </table>
+  </div>
 
-    // Ícones individuais
-    const icones = document.querySelectorAll('.audio-icon');
-    icones.forEach(icone => {
-      icone.addEventListener('click', () => {
-        const texto = icone.parentElement.textContent.replace('🔊','').trim();
-        narrar(texto);
-      });
-    });
-  </script>
+  <!-- Tabela 6 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>51</td><td>52</td><td>53</td><td>54</td><td>55</td></tr>
+      <tr><td>56</td><td>57</td><td>58</td><td>59</td><td>60</td></tr>
+    </table>
+  </div>
+
+  <!-- Tabela 7 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>61</td><td>62</td><td>63</td><td>64</td><td>65</td></tr>
+      <tr><td>66</td><td>67</td><td>68</td><td>69</td><td>70</td></tr>
+    </table>
+  </div>
+
+  <!-- Tabela 8 -->
+  <div class="tabela-container">
+    <p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p>
+    <table>
+      <tr><td>71</td><td>72</td><td>73</td><td>74</td><td>75</td></tr>
+      <tr><td>76</td><td>77</td><td>78</td><td>79</td><td>80</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- Botões Globais -->
+<button id="lerPagina" style="background-color: #4CAF50;">🔊 Ler Todas as Perguntas</button>
+<button id="parar" style="background-color: #f44336;">⏹️ Parar</button>
+
+<script>
+function narrar(texto) {
+  if (!texto) return;
+  window.speechSynthesis.cancel();
+  const fala = new SpeechSynthesisUtterance(texto);
+  fala.lang = 'pt-BR';
+  window.speechSynthesis.speak(fala);
+}
+
+// Botão ler todas as perguntas
+document.getElementById('lerPagina').addEventListener('click', () => {
+  narrar(document.getElementById('container').innerText);
+});
+
+// Botão parar leitura
+document.getElementById('parar').addEventListener('click', () => {
+  window.speechSynthesis.cancel();
+});
+
+// Ícone de áudio individual
+const icones = document.querySelectorAll('.audio-icon');
+icones.forEach(icone => {
+  icone.addEventListener('click', () => {
+    const texto = icone.parentElement.textContent.replace('🔊','').trim();
+    narrar(texto);
+  });
+});
+</script>
 
 </body>
 </html>
-
