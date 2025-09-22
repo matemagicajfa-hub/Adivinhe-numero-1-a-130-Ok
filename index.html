@@ -217,11 +217,14 @@
     p {
       font-size: 16px;
       margin: 10px 0;
+      display: flex;
+      align-items: center;
     }
     .audio-icon {
       cursor: pointer;
-      margin-right: 5px;
+      margin-right: 8px;
       color: #2196F3;
+      user-select: none;
     }
     button {
       padding: 10px 15px;
@@ -284,15 +287,19 @@
     // ===== Adicionar ícones 🔊 nas perguntas =====
     const perguntas = container.querySelectorAll('p');
     perguntas.forEach(p => {
+      // Criar ícone
       const icone = document.createElement('span');
       icone.innerText = '🔊';
       icone.className = 'audio-icon';
       icone.title = 'Clique para ouvir esta pergunta';
+      
+      // Clique no ícone
       icone.addEventListener('click', () => {
-        const textoPergunta = p.textContent.replace('🔊','').trim();
-        narrar(textoPergunta);
+        narrar(p.textContent.trim());
       });
-      p.prepend(icone);
+
+      // Inserir ícone no início do <p>
+      p.insertBefore(icone, p.firstChild);
     });
 
   });
