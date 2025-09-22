@@ -242,20 +242,19 @@
   <div id="container">
     <!-- 8 Perguntas -->
     <p>O número que você pensou está nesta tabela?</p>
-    <p>Você consegue identificar o número correto?</p>
-    <p>Qual número chamou mais sua atenção?</p>
-    <p>Você acha que ele é par ou ímpar?</p>
-    <p>O número escolhido está entre 1 e 65?</p>
-    <p>Está entre 66 e 130?</p>
-    <p>Você consegue adivinhar o próximo número da sequência?</p>
-    <p>Conseguiu encontrar o número que pensou?</p>
+    <p>O número que você pensou está nesta tabela?</p>
+    <p>O número que você pensou está nesta tabela?</p>
+    <p>O número que você pensou está nesta tabela?</p>
+    <p>O número que você pensou está nesta tabela?</p>
+    <p>O número que você pensou está nesta tabela?</p>
+    <p>O número que você pensou está nesta tabela?</p>
+    <p>O número que você pensou está nesta tabela?</p>
   </div>
 
+  <!-- Botões Ler Página e Parar -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('container');
 
-    // ===== Função de narração =====
     function narrar(texto) {
       if (!texto) return;
       window.speechSynthesis.cancel();
@@ -264,7 +263,6 @@
       window.speechSynthesis.speak(fala);
     }
 
-    // ===== Botões principais =====
     function criarBotao(texto, cor, posRight) {
       const btn = document.createElement('button');
       btn.textContent = texto;
@@ -282,34 +280,35 @@
     const btnLerPagina = criarBotao('🔊 Ler Página', '#4CAF50', '20px');
     const btnParar = criarBotao('⏹️ Parar', '#f44336', '150px');
 
-    // Ler toda a página
-    btnLerPagina.addEventListener('click', () => {
-      narrar(document.body.innerText);
-    });
-
-    // Parar leitura
-    btnParar.addEventListener('click', () => {
-      window.speechSynthesis.cancel();
-    });
+    btnLerPagina.addEventListener('click', () => narrar(document.body.innerText));
+    btnParar.addEventListener('click', () => window.speechSynthesis.cancel());
 
     // ===== Adicionar ícones 🔊 nas perguntas =====
-    const perguntas = container.querySelectorAll('p');
-    perguntas.forEach(p => {
-      const icone = document.createElement('span');
-      icone.innerText = '🔊';
-      icone.className = 'audio-icon';
-      icone.title = 'Clique para ouvir esta pergunta';
-      
-      icone.addEventListener('click', () => {
-        // Remove o ícone do texto ao ler
-        const texto = p.textContent.replace('🔊','').trim();
-        narrar(texto);
+    function adicionarIcones() {
+      const container = document.getElementById('container');
+      if (!container) {
+        setTimeout(adicionarIcones, 100); // espera o container carregar
+        return;
+      }
+
+      const perguntas = container.querySelectorAll('p');
+      perguntas.forEach(p => {
+        if (p.querySelector('.audio-icon')) return; // não duplicar ícone
+
+        const icone = document.createElement('span');
+        icone.innerText = '🔊';
+        icone.className = 'audio-icon';
+        icone.title = 'Clique para ouvir esta pergunta';
+        icone.addEventListener('click', () => {
+          const texto = p.textContent.replace('🔊','').trim();
+          narrar(texto);
+        });
+
+        p.insertBefore(icone, p.firstChild);
       });
+    }
 
-      // Coloca o ícone na frente do texto da pergunta
-      p.insertBefore(icone, p.firstChild);
-    });
-
+    adicionarIcones();
   });
   </script>
 
