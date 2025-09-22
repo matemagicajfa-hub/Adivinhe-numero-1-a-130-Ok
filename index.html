@@ -202,14 +202,14 @@
         s.style.position='absolute';
         s.style.borderRadius='50%';
         s.style.animation='piscar '+(1+Math.random()*3)+'s infinite alternate';
-  container.appendChild(s);
+ container.appendChild(s);
     }
   })();
   </script>
 
   <!-- ===== SCRIPT DOS BOTÕES E ÍCONES ===== -->
   <script>
-  (function(){
+  document.addEventListener('DOMContentLoaded', function() {
     if (!('speechSynthesis' in window)) {
       console.warn('SpeechSynthesis não suportado neste navegador.');
       return;
@@ -264,7 +264,7 @@
       window.speechSynthesis.cancel();
     });
 
-    // ===== Ícones clicáveis em cada pergunta =====
+    // ===== Ícones clicáveis 🔊 nas perguntas =====
     const container = document.getElementById('container');
     if (container) {
       const perguntas = container.querySelectorAll('p');
@@ -281,7 +281,7 @@
       });
     }
 
-  })();
+  });
   </script>
 
 </body>
