@@ -207,6 +207,57 @@
   })();
   </script>
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Adivinhe o Número</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .numero {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px;
+      background-color: #eee;
+      border-radius: 50%;
+      cursor: pointer;
+      animation: piscar 2s infinite alternate;
+    }
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    @keyframes piscar {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <!-- Perguntas de exemplo -->
+    <p>Qual número você acha que está escondido?</p>
+    <p>Escolha um número de 1 a 130.</p>
+    <p>Conseguiu adivinhar o número correto?</p>
+  </div>
+
+  <!-- ===== SCRIPT DO JOGO ===== -->
+  <script>
+  (function(){
+    const container = document.getElementById('container');
+
+    for(let i=1;i<=130;i++){
+      const s = document.createElement('div');
+      s.className='numero';
+      s.innerText=i;
+      s.style.borderRadius='50%';
+      s.style.animation='piscar '+(1+Math.random()*3)+'s infinite alternate';
+      container.appendChild(s);
+    }
+  })();
+  </script>
+
   <!-- ===== SCRIPT DOS BOTÕES E ÍCONES ===== -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -286,3 +337,4 @@
 
 </body>
 </html>
+
