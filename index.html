@@ -269,7 +269,7 @@
       window.speechSynthesis.speak(fala);
     }
 
-    // ===== Criar botões =====
+    // ===== Botão Ler Página =====
     function criarBotao(texto, cor, posRight) {
       const btn = document.createElement('button');
       btn.textContent = texto;
@@ -291,22 +291,10 @@
     }
 
     const btnLerPagina = criarBotao('🔊 Ler Página', '#4CAF50', '20px');
-    const btnLerPerguntas = criarBotao('🎯 Ler Perguntas', '#2196F3', '150px');
-    const btnParar = criarBotao('⏹️ Parar', '#f44336', '300px');
+    const btnParar = criarBotao('⏹️ Parar', '#f44336', '150px');
 
     btnLerPagina.addEventListener('click', () => {
       narrar(document.body.innerText);
-    });
-
-    btnLerPerguntas.addEventListener('click', () => {
-      const perguntas = container.querySelectorAll('p');
-      let texto = '';
-      perguntas.forEach(p => {
-        // Pega somente o texto da pergunta, sem o ícone
-        const textoPergunta = p.textContent.replace('🔊','').trim();
-        texto += textoPergunta + ' ';
-      });
-      narrar(texto.trim());
     });
 
     btnParar.addEventListener('click', () => {
@@ -332,4 +320,3 @@
 
 </body>
 </html>
-
