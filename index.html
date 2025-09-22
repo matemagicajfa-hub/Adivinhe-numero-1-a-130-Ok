@@ -247,11 +247,11 @@
     <p>Conseguiu adivinhar o número correto?</p>
   </div>
 
-  <!-- ===== SCRIPT DO JOGO ===== -->
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('container');
 
+    // ===== Criar números do jogo =====
     for(let i=1;i<=130;i++){
       const s = document.createElement('div');
       s.className='numero';
@@ -261,12 +261,15 @@
       container.appendChild(s);
     }
 
-    // ===== SCRIPT DOS BOTÕES E ÍCONES =====
-    if (!('speechSynthesis' in window)) {
-      console.warn('SpeechSynthesis não suportado neste navegador.');
-      return;
+    // ===== Função de narração =====
+    function narrar(texto) {
+      window.speechSynthesis.cancel();
+      const fala = new SpeechSynthesisUtterance(texto);
+      fala.lang = 'pt-BR';
+      window.speechSynthesis.speak(fala);
     }
 
+    // ===== Criar botões =====
     function criarBotao(texto, cor, posRight) {
       const btn = document.createElement('button');
       btn.textContent = texto;
@@ -291,21 +294,18 @@
     const btnLerPerguntas = criarBotao('🎯 Ler Perguntas', '#2196F3', '150px');
     const btnParar = criarBotao('⏹️ Parar', '#f44336', '300px');
 
-    function narrar(texto) {
-      window.speechSynthesis.cancel();
-      const fala = new SpeechSynthesisUtterance(texto);
-      fala.lang = 'pt-BR';
-      window.speechSynthesis.speak(fala);
-    }
-
     btnLerPagina.addEventListener('click', () => {
       narrar(document.body.innerText);
     });
 
     btnLerPerguntas.addEventListener('click', () => {
-      const perguntas = Array.from(container.querySelectorAll('p'));
+      const perguntas = container.querySelectorAll('p');
       let texto = '';
-      perguntas.forEach(p => texto += p.innerText + ' ');
+      perguntas.forEach(p => {
+        // Pega somente o texto da pergunta, sem o ícone
+        const textoPergunta = p.textContent.replace('🔊','').trim();
+        texto += textoPergunta + ' ';
+      });
       narrar(texto.trim());
     });
 
@@ -313,7 +313,7 @@
       window.speechSynthesis.cancel();
     });
 
-    // ===== Ícones clicáveis 🔊 nas perguntas =====
+    // ===== Adicionar ícones 🔊 nas perguntas =====
     const perguntas = container.querySelectorAll('p');
     perguntas.forEach(p => {
       const icone = document.createElement('span');
@@ -321,7 +321,8 @@
       icone.className = 'audio-icon';
       icone.title = 'Clique para ouvir esta pergunta';
       icone.addEventListener('click', () => {
-        narrar(p.innerText);
+        const textoPergunta = p.textContent.replace('🔊','').trim();
+        narrar(textoPergunta);
       });
       p.prepend(icone);
     });
