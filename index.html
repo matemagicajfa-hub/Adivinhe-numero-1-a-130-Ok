@@ -203,33 +203,63 @@
         s.style.borderRadius='50%';
         s.style.animation='piscar '+(1+Math.random()*3)+'s infinite alternate';
         container.appendChild(s);
-      }
-    })();
-    <!-- Botão para leitura em voz -->
-    <button onclick="lerPagina()" 
-            style="position: fixed; bottom: 20px; right: 20px; 
-                   padding: 10px 15px; font-size: 16px; 
-                   border: none; border-radius: 8px; 
-                   background-color: #4CAF50; color: white; 
-                   cursor: pointer; z-index: 9999;">
-      🔊 Ler Página
-    </button>
+     // ==== Botões de leitura em voz ====
+(function(){
+  if (!('speechSynthesis' in window)) {
+    console.warn('SpeechSynthesis não suportado neste navegador.');
+    return;
+  }
 
-    <script>
-      function lerPagina() {
-        // Cancela qualquer leitura em andamento
-        window.speechSynthesis.cancel();
+  function criarBotao(texto, cor, posRight) {
+    const btn = document.createElement('button');
+    btn.textContent = texto;
+    Object.assign(btn.style, {
+      position: 'fixed',
+      bottom: '20px',
+      right: posRight,
+      padding: '10px 15px',
+      fontSize: '14px',
+      border: 'none',
+      borderRadius: '8px',
+      backgroundColor: cor,
+      color: 'white',
+      cursor: 'pointer',
+      zIndex: '9999'
+    });
+    document.body.appendChild(btn);
+    return btn;
+  }
 
-        // Captura o texto visível da página
-        const texto = document.body.innerText;
+  // Criar os botões
+  const btnLerPagina = criarBotao('🔊 Ler Página', '#4CAF50', '20px');
+  const btnLerPerguntas = criarBotao('🎯 Ler Perguntas', '#2196F3', '150px');
+  const btnParar = criarBotao('⏹️ Parar', '#f44336', '300px');
 
-        // Cria o objeto de fala
-        const fala = new SpeechSynthesisUtterance(texto);
-        fala.lang = "pt-BR"; // idioma português
+  // Função para narrar
+  function narrar(texto) {
+    window.speechSynthesis.cancel();
+    const fala = new SpeechSynthesisUtterance(texto);
+    fala.lang = 'pt-BR';
+    window.speechSynthesis.speak(fala);
+  }
 
-        // Inicia a leitura
-        window.speechSynthesis.speak(fala);
-      }
-    </script>
-</body>
-</html>
+  // Ações dos botões
+  btnLerPagina.addEventListener('click', () => {
+    narrar(document.body.innerText);
+  });
+
+  btnLerPerguntas.addEventListener('click', () => {
+    // Aqui você pode ajustar o seletor de acordo com as "perguntas" do jogo
+    // Exemplo: pegar textos dentro de <p> ou um id específico
+    const perguntas = document.querySelectorAll('p, h1, h2, h3');
+    let texto = '';
+    perguntas.forEach(p => {
+      texto += p.innerText + ' ';
+    });
+    narrar(texto.trim());
+  });
+
+  btnParar.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+  });
+})();
