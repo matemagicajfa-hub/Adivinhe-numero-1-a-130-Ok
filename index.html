@@ -211,18 +211,21 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Adivinhe o Número</title>
+  <title>Perguntas por Tabela com Áudio</title>
   <style>
     body { font-family: Arial, sans-serif; }
+    .tabela-container {
+      margin-bottom: 20px;
+    }
     p {
       font-size: 16px;
-      margin: 10px 0;
       display: flex;
       align-items: center;
+      margin: 5px 0;
     }
     .audio-icon {
       cursor: pointer;
-      margin-right: 8px;
+      margin-left: 8px;
       color: #2196F3;
       user-select: none;
     }
@@ -232,29 +235,30 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      z-index: 9999;
       color: white;
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
 
+  <!-- 8 tabelas simuladas -->
   <div id="container">
-    <!-- 8 Perguntas -->
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
-    <p>O número que você pensou está nesta tabela?</p>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
+    <div class="tabela-container"><p>O número que você pensou está nesta tabela? <span class="audio-icon">🔊</span></p></div>
   </div>
 
   <!-- Botões Ler Página e Parar -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  <button id="lerPagina" style="background-color: #4CAF50;">🔊 Ler Página</button>
+  <button id="parar" style="background-color: #f44336;">⏹️ Parar</button>
 
+  <script>
     function narrar(texto) {
       if (!texto) return;
       window.speechSynthesis.cancel();
@@ -263,54 +267,26 @@
       window.speechSynthesis.speak(fala);
     }
 
-    function criarBotao(texto, cor, posRight) {
-      const btn = document.createElement('button');
-      btn.textContent = texto;
-      Object.assign(btn.style, {
-        position: 'fixed',
-        bottom: '20px',
-        right: posRight,
-        backgroundColor: cor,
-        color: 'white',
+    // Ler todas as perguntas
+    document.getElementById('lerPagina').addEventListener('click', () => {
+      narrar(document.getElementById('container').innerText);
+    });
+
+    // Parar leitura
+    document.getElementById('parar').addEventListener('click', () => {
+      window.speechSynthesis.cancel();
+    });
+
+    // Ícones individuais
+    const icones = document.querySelectorAll('.audio-icon');
+    icones.forEach(icone => {
+      icone.addEventListener('click', () => {
+        const texto = icone.parentElement.textContent.replace('🔊','').trim();
+        narrar(texto);
       });
-      document.body.appendChild(btn);
-      return btn;
-    }
-
-    const btnLerPagina = criarBotao('🔊 Ler Página', '#4CAF50', '20px');
-    const btnParar = criarBotao('⏹️ Parar', '#f44336', '150px');
-
-    btnLerPagina.addEventListener('click', () => narrar(document.body.innerText));
-    btnParar.addEventListener('click', () => window.speechSynthesis.cancel());
-
-    // ===== Adicionar ícones 🔊 nas perguntas =====
-    function adicionarIcones() {
-      const container = document.getElementById('container');
-      if (!container) {
-        setTimeout(adicionarIcones, 100); // espera o container carregar
-        return;
-      }
-
-      const perguntas = container.querySelectorAll('p');
-      perguntas.forEach(p => {
-        if (p.querySelector('.audio-icon')) return; // não duplicar ícone
-
-        const icone = document.createElement('span');
-        icone.innerText = '🔊';
-        icone.className = 'audio-icon';
-        icone.title = 'Clique para ouvir esta pergunta';
-        icone.addEventListener('click', () => {
-          const texto = p.textContent.replace('🔊','').trim();
-          narrar(texto);
-        });
-
-        p.insertBefore(icone, p.firstChild);
-      });
-    }
-
-    adicionarIcones();
-  });
+    });
   </script>
 
 </body>
 </html>
+
