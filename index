@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Matemágica ✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background:#0b0b1a; color:#fff; text-align:center; padding:20px; }
+    h1 { color:#ffeb3b; }
+    .avatar { width:100px; margin:10px; vertical-align:middle; }
+    .pergunta { margin:18px 0; font-size:1rem; background:rgba(255,255,255,0.05); padding:12px; border-radius:8px; display:inline-block; width:95%; max-width:800px; }
+    .enviar { background:#ff5722; border:none; color:#fff; padding:10px 18px; font-size:1rem; border-radius:8px; cursor:pointer; margin-top:12px; }
+    .resultado { margin-top:26px; font-size:1.25rem; font-weight:bold; color:#ffeb3b; }
+    .tabela-bloco { margin:12px 0; }
+    .estrelas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+    .confetti-canvas { position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+    @media (max-width:600px){ .tabela td{ padding:4px; min-width:28px; } .avatar{width:72px;} }
+  </style>
+</head>
+<body>
+  <h1>🎩 Matemágica ✨</h1>
+  <p>Pense em um número entre 1 e 130 e responda: O número que você pensou aparece em cada tabela abaixo?</p>
+  <div>
+    <img src="avatar_barba.png" alt="Mago com barba" class="avatar">
+    <img src="avatar_sem_barba.png" alt="Mago sem barba" class="avatar">
+  </div>
+  <form id="customForm">
+    <!-- Perguntas e tabelas aqui -->
+    <!-- O código da tabela será inserido conforme seu conteúdo original -->
+    <div class="pergunta" id="pergunta1">
+      <div style="text-align:left; margin-bottom:8px;"><strong>O número que você pensou está nesta tabela?</strong></div>
+      <div class="tabela-bloco">
+        <!-- Tabela com números aqui -->
+      </div>
+      <div style="margin-top:8px; text-align:left;">
+        <label><input type="radio" name="p1" value="sim"> Sim</label>
+        &nbsp;&nbsp;&nbsp;
+        <label><input type="radio" name="p1" value="nao"> Não</label>
+      </div>
+    </div>
+    <!-- Outras perguntas seguem o mesmo padrão -->
+    <div style="margin-top:18px;">
+      <button type="button" class="enviar" onclick="mostrarResultado()">Revelar Número</button>
+    </div>
+  </form>
+
+  <div class="resultado" id="resultado">Nenhum número escolhido ainda</div>
+
+  <div class="estrelas"></div>
+  <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+  <!-- VLibras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script>
+    function mostrarResultado(){
+      var numero = 0;
+      var radios1 = document.getElementsByName('p1');
+      var marked1 = null;
+      for(var r=0;r<radios1.length;r++){ if(radios1[r].checked) marked1 = radios1[r].value; }
+      if(marked1 === 'sim') numero += 1;
+
+      // Outras perguntas seguem o mesmo padrão...
+
+      if(numero>0){
+        var resultadoTexto = '🎩 O número que você pensou é o ' + numero + '!';
+        document.getElementById('resultado').innerHTML = resultadoTexto;
+        lerTexto(resultadoTexto); // Leitura do número em voz alta
+        confetti({ particleCount: 160, spread: 80, origin: { y: 0.6 } });
+      } else {
+        var erroTexto = 'Por favor, responda todas as perguntas.';
+        document.getElementById('resultado').innerHTML = erroTexto;
+        lerTexto(erroTexto); // Leitura do erro em voz alta
+      }
+    }
+
+    function lerTexto(texto) {
+      const synth = window.speechSynthesis;
+      const msg = new SpeechSynthesisUtterance(texto);
+      msg.lang = 'pt-BR';
+      synth.speak(msg);
+    }
+
+    function participarNovamente(){
+      document.getElementById('customForm').reset();
+      document.getElementById('resultado').textContent = 'Nenhum número escolhido ainda';
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    // Estrelas cintilando
+    (function(){
+      var container = document.querySelector('.estrelas');
+      for(var i=0;i<80;i++){
+        var s = document.createElement('div');
+        s.className='estrela';
+        s.style.top=(Math.random()*100)+'vh';
+        s.style.left=(Math.random()*100)+'vw';
+        s.style.width=(1+Math.random()*3)+'px';
+        s.style.height=s.style.width;
+        s.style.background='rgba(255,255,255,'+(0.2+Math.random()*0.8)+')';
+        s.style.position='absolute';
+        s.style.borderRadius='50%';
+        s.style.animation='piscar '+(1+Math.random()*3)+'s infinite alternate';
+        container.appendChild(s);
+      }
+    })();
+  </script>
+</body>
+</html>
