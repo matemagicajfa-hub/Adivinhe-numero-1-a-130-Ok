@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>🎩 Matemágica - Adivinha o Número 🎉</title>
+  <title>Matemágica ✨</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { font-family: Arial, sans-serif; background:#0b0b1a; color:#fff; text-align:center; padding:20px; }
@@ -15,7 +14,7 @@
     .tabela-bloco { margin:12px 0; }
     .estrelas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
     .confetti-canvas { position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
-    .audio-icon { cursor: pointer; }
+    .btn-audio { cursor: pointer; font-size: 1.5rem; color: #ffeb3b; margin-left: 10px; }
     @media (max-width:600px){ .tabela td{ padding:4px; min-width:28px; } .avatar{width:72px;} }
   </style>
 </head>
@@ -27,93 +26,59 @@
     <img src="avatar_sem_barba.png" alt="Mago sem barba" class="avatar">
   </div>
   <form id="customForm">
-    
-    <!-- Tabela 1 -->
+
     <div class="pergunta" id="pergunta1">
       <div style="text-align:left; margin-bottom:8px;">
         <strong>O número que você pensou está nesta tabela?</strong>
-        <img src="audio-icon.png" alt="Audio" class="audio-icon" onclick="lerTexto('O número que você pensou está nesta tabela?')">
+        <button type="button" class="btn-audio" onclick="lerPergunta('O número que você pensou está nesta tabela?')">🔊</button>
       </div>
-      <div class="tabela-bloco"><h3 style="color:#ffeb3b;">Tabela 1</h3><div style="border:3px solid #ffeb3b; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
-        <table style="border-collapse:collapse; color:#111;">
-          <tr><td>1</td><td>3</td><td>5</td><td>7</td><td>9</td><td>11</td><td>13</td><td>15</td></tr>
-        </table></div></div>
+      <div class="tabela-bloco">
+        <h3 style="color:#ffeb3b;">Tabela 1</h3>
+        <div style="border:3px solid #ffeb3b; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
+          <table style="border-collapse:collapse; color:#111;">
+            <!-- Tabela 1 -->
+            <tr>
+              <td>1</td><td>3</td><td>5</td><td>7</td><td>9</td>
+              <td>11</td><td>13</td><td>15</td><td>17</td><td>19</td>
+            </tr>
+            <!-- Restante da Tabela -->
+          </table>
+        </div>
+      </div>
       <div style="margin-top:8px; text-align:left;">
         <label><input type="radio" name="p1" value="sim"> Sim</label>
         &nbsp;&nbsp;&nbsp;
         <label><input type="radio" name="p1" value="nao"> Não</label>
       </div>
     </div>
-
-    <!-- Tabela 2 -->
+    
     <div class="pergunta" id="pergunta2">
       <div style="text-align:left; margin-bottom:8px;">
         <strong>O número que você pensou está nesta tabela?</strong>
-        <img src="audio-icon.png" alt="Audio" class="audio-icon" onclick="lerTexto('O número que você pensou está nesta tabela?')">
+        <button type="button" class="btn-audio" onclick="lerPergunta('O número que você pensou está nesta tabela?')">🔊</button>
       </div>
-      <div class="tabela-bloco"><h3 style="color:#ffeb3b;">Tabela 2</h3><div style="border:3px solid #ffeb3b; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
-        <table style="border-collapse:collapse; color:#111;">
-          <tr><td>2</td><td>6</td><td>10</td><td>14</td><td>18</td><td>22</td><td>26</td><td>30</td></tr>
-        </table></div></div>
+      <div class="tabela-bloco">
+        <h3 style="color:#8bc34a;">Tabela 2</h3>
+        <div style="border:3px solid #8bc34a; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
+          <table style="border-collapse:collapse; color:#111;">
+            <!-- Tabela 2 -->
+            <tr>
+              <td>2</td><td>3</td><td>6</td><td>7</td><td>10</td>
+              <td>11</td><td>14</td><td>15</td><td>18</td><td>19</td>
+            </tr>
+            <!-- Restante da Tabela -->
+          </table>
+        </div>
+      </div>
       <div style="margin-top:8px; text-align:left;">
         <label><input type="radio" name="p2" value="sim"> Sim</label>
         &nbsp;&nbsp;&nbsp;
         <label><input type="radio" name="p2" value="nao"> Não</label>
       </div>
     </div>
-
-    <!-- Tabela 3 -->
-    <div class="pergunta" id="pergunta3">
-      <div style="text-align:left; margin-bottom:8px;">
-        <strong>O número que você pensou está nesta tabela?</strong>
-        <img src="audio-icon.png" alt="Audio" class="audio-icon" onclick="lerTexto('O número que você pensou está nesta tabela?')">
-      </div>
-      <div class="tabela-bloco"><h3 style="color:#ffeb3b;">Tabela 3</h3><div style="border:3px solid #ffeb3b; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
-        <table style="border-collapse:collapse; color:#111;">
-          <tr><td>4</td><td>12</td><td>20</td><td>28</td><td>36</td><td>44</td><td>52</td><td>60</td></tr>
-        </table></div></div>
-      <div style="margin-top:8px; text-align:left;">
-        <label><input type="radio" name="p3" value="sim"> Sim</label>
-        &nbsp;&nbsp;&nbsp;
-        <label><input type="radio" name="p3" value="nao"> Não</label>
-      </div>
-    </div>
-
-    <!-- Tabela 4 -->
-    <div class="pergunta" id="pergunta4">
-      <div style="text-align:left; margin-bottom:8px;">
-        <strong>O número que você pensou está nesta tabela?</strong>
-        <img src="audio-icon.png" alt="Audio" class="audio-icon" onclick="lerTexto('O número que você pensou está nesta tabela?')">
-      </div>
-      <div class="tabela-bloco"><h3 style="color:#ffeb3b;">Tabela 4</h3><div style="border:3px solid #ffeb3b; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
-        <table style="border-collapse:collapse; color:#111;">
-          <tr><td>8</td><td>24</td><td>40</td><td>56</td><td>72</td><td>88</td><td>104</td><td>120</td></tr>
-        </table></div></div>
-      <div style="margin-top:8px; text-align:left;">
-        <label><input type="radio" name="p4" value="sim"> Sim</label>
-        &nbsp;&nbsp;&nbsp;
-        <label><input type="radio" name="p4" value="nao"> Não</label>
-      </div>
-    </div>
-
-    <!-- Tabela 5 -->
-    <div class="pergunta" id="pergunta5">
-      <div style="text-align:left; margin-bottom:8px;">
-        <strong>O número que você pensou está nesta tabela?</strong>
-        <img src="audio-icon.png" alt="Audio" class="audio-icon" onclick="lerTexto('O número que você pensou está nesta tabela?')">
-      </div>
-      <div class="tabela-bloco"><h3 style="color:#ffeb3b;">Tabela 5</h3><div style="border:3px solid #ffeb3b; padding:6px; display:inline-block; border-radius:6px; background:#fff;">
-        <table style="border-collapse:collapse; color:#111;">
-          <tr><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td><td>512</td><td>1024</td><td>2048</td></tr>
-        </table></div></div>
-      <div style="margin-top:8px; text-align:left;">
-        <label><input type="radio" name="p5" value="sim"> Sim</label>
-        &nbsp;&nbsp;&nbsp;
-        <label><input type="radio" name="p5" value="nao"> Não</label>
-      </div>
-    </div>
-
-    <!-- Botão para revelar o número -->
+    
+    <!-- Adicione mais perguntas conforme necessário -->
+    
     <div style="margin-top:18px;">
       <button type="button" class="enviar" onclick="mostrarResultado()">Revelar Número</button>
     </div>
@@ -124,26 +89,37 @@
   <div class="estrelas"></div>
   <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
 
-  <!-- VLibras -->
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
   <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-  <script>
-    function lerTexto(texto) {
+    function lerPergunta(texto) {
       const synth = window.speechSynthesis;
-      const msg = new SpeechSynthesisUtterance(texto);
-      msg.lang = 'pt-BR';
-      synth.speak(msg);
+      const utterance = new SpeechSynthesisUtterance(texto);
+      utterance.lang = 'pt-BR';
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      synth.speak(utterance);
+    }
+
+    function mostrarResultado(){
+      var numero = 0;
+
+      // Processamento de respostas
+      // Adicione o código para coletar as respostas aqui
+
+      if(numero>0){
+        document.getElementById('resultado').innerHTML = '🎩 <strong>O número que você pensou é o ' + numero + '!</strong><br><br>🙌 Agradecemos a sua participação.<br>👨‍🏫 Professores: Rafael Oliveira e Ronaldo Soares<br><br><button onclick="participarNovamente()" class="enviar">🔄 Participar novamente</button>';
+        confetti({ particleCount: 160, spread: 80, origin: { y: 0.6 } });
+      } else {
+        document.getElementById('resultado').innerHTML = 'Por favor, responda todas as perguntas.<br><br><button onclick="participarNovamente()" class="enviar">🔄 Participar novamente</button>';
+      }
+    }
+
+    function participarNovamente(){
+      document.getElementById('customForm').reset();
+      document.getElementById('resultado').textContent = 'Nenhum número escolhido ainda';
+      window.scrollTo({top:0, behavior:'smooth'});
     }
   </script>
 </body>
 </html>
+
+
