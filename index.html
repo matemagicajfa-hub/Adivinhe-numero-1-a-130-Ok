@@ -231,6 +231,11 @@
       0% { opacity: 0.5; }
       100% { opacity: 1; }
     }
+    .audio-icon {
+      cursor: pointer;
+      margin-right: 5px;
+      color: #2196F3;
+    }
   </style>
 </head>
 <body>
@@ -244,7 +249,7 @@
 
   <!-- ===== SCRIPT DO JOGO ===== -->
   <script>
-  (function(){
+  document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('container');
 
     for(let i=1;i<=130;i++){
@@ -255,12 +260,8 @@
       s.style.animation='piscar '+(1+Math.random()*3)+'s infinite alternate';
       container.appendChild(s);
     }
-  })();
-  </script>
 
-  <!-- ===== SCRIPT DOS BOTÕES E ÍCONES ===== -->
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
+    // ===== SCRIPT DOS BOTÕES E ÍCONES =====
     if (!('speechSynthesis' in window)) {
       console.warn('SpeechSynthesis não suportado neste navegador.');
       return;
@@ -302,10 +303,7 @@
     });
 
     btnLerPerguntas.addEventListener('click', () => {
-      const container = document.getElementById('container');
-      if (!container) return;
-
-      const perguntas = Array.from(container.querySelectorAll('p')).filter(p => p.offsetParent !== null);
+      const perguntas = Array.from(container.querySelectorAll('p'));
       let texto = '';
       perguntas.forEach(p => texto += p.innerText + ' ');
       narrar(texto.trim());
@@ -316,21 +314,17 @@
     });
 
     // ===== Ícones clicáveis 🔊 nas perguntas =====
-    const container = document.getElementById('container');
-    if (container) {
-      const perguntas = container.querySelectorAll('p');
-      perguntas.forEach(p => {
-        const icone = document.createElement('span');
-        icone.innerText = '🔊 ';
-        icone.style.cursor = 'pointer';
-        icone.style.marginRight = '5px';
-        icone.title = 'Clique para ouvir esta pergunta';
-        icone.addEventListener('click', () => {
-          narrar(p.innerText);
-        });
-        p.prepend(icone);
+    const perguntas = container.querySelectorAll('p');
+    perguntas.forEach(p => {
+      const icone = document.createElement('span');
+      icone.innerText = '🔊';
+      icone.className = 'audio-icon';
+      icone.title = 'Clique para ouvir esta pergunta';
+      icone.addEventListener('click', () => {
+        narrar(p.innerText);
       });
-    }
+      p.prepend(icone);
+    });
 
   });
   </script>
