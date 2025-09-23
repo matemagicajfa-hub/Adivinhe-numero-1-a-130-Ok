@@ -29,7 +29,9 @@
 
    <div class="pergunta" id="pergunta1">
   <div style="text-align:left; margin-bottom:8px;">
-    <strong>O número que você pensou está nesta tabela? <span class="audio-icon" style="font-size:20px; cursor:pointer; margin-left:10px;">🔊</span></strong>
+    <strong>O número que você pensou está nesta tabela? 
+      <span class="audio-icon" style="font-size:20px; cursor:pointer; margin-left:10px;" onclick="lerPergunta()">🔊</span>
+    </strong>
   </div>
   <div class="tabela-bloco">
     <h3 style="color:#ffeb3b;">Tabela 1</h3>
@@ -128,6 +130,15 @@
     <label><input type="radio" name="p1" value="nao"> Não</label>
   </div>
 </div>
+
+<script>
+  function lerPergunta() {
+    const pergunta = "O número que você pensou está nesta tabela?";
+    const speech = new SpeechSynthesisUtterance(pergunta);
+    speech.lang = 'pt-BR'; // Definir o idioma para português
+    window.speechSynthesis.speak(speech);
+  }
+</script>
  
   <div class="pergunta" id="pergunta2">
   <div style="text-align:left; margin-bottom:8px;">
